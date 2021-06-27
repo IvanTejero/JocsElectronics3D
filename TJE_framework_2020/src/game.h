@@ -13,7 +13,8 @@
 #include "Stage.h"
 #include "Gamemap.h"
 #include <string>
-//#include "Entity.h"
+#include "extra/bass.h"
+
 
 struct Entity_ {
 	Matrix44 model;
@@ -115,6 +116,11 @@ public:
 	Texture* doortext;
 	Matrix44 doorModel;
 
+	//Clock
+	Mesh* clockMesh;
+	Texture* clockText;
+	Matrix44 clockModel;
+
 
 	//Box
 	Mesh* box_mesh;
@@ -136,7 +142,7 @@ public:
 	int idxAjustes = 0;
 
 	//Audio
-
+	//HSAMPLE titleSound;
 
 	Game( int window_width, int window_height, SDL_Window* window );
 

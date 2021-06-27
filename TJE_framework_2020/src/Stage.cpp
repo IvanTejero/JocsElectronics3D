@@ -44,7 +44,7 @@ void tutorialStage::render() {
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	
+	RenderMesh(game->shader, game->clockMesh, game->clockModel, game->camera, game->clockText);
 	RenderMesh(game->shader, game->mainCharacter, game->model, game->camera, game->texCharacter);
 	RenderMesh(game->shader, game->box_mesh, game->boxModel, game->camera, game->box_text);
 

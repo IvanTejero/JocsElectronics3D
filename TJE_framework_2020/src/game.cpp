@@ -34,6 +34,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	elapsed_time = 0.0f;
 	mouse_locked = false;
 
+	/*
+	if (BASS_Init(-1, 44100, 0, 0, NULL) == false) //-1 significa usar el por defecto del sistema operativo
+	{
+		//error abriendo la tarjeta de sonido...
+	}*/
+
+
 	char* nombre;
 	nombre = "data/bosque.txt";
 	readFile(nombre);
@@ -53,7 +60,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
-	box_mesh = Mesh::Get("data/box1.obj");
+	box_mesh = Mesh::Get("data/room1.obj");
 	box_text = Texture::Get("data/white.png");
 
 
@@ -90,7 +97,11 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	
 	doormesh = Mesh::Get("data/animations/door/door1.obj");
 	doortext = Texture::Get("data/animations/door/door.png");
-	doorModel.setTranslation(14,0,99.5);
+	doorModel.setTranslation(5,0,-20);
+
+	clockText = Texture::Get("data/mesh/clock/clock.png");
+	//clockMesh = Mesh::Get("data/mesh/clock/clock.obj");
+	
 
 	// example of shader loading using the shaders manager
 	
