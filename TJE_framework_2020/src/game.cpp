@@ -34,11 +34,11 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	elapsed_time = 0.0f;
 	mouse_locked = false;
 
-	/*
+	
 	if (BASS_Init(-1, 44100, 0, 0, NULL) == false) //-1 significa usar el por defecto del sistema operativo
 	{
 		//error abriendo la tarjeta de sonido...
-	}*/
+	}
 
 
 	char* nombre;
@@ -93,8 +93,6 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	skybox = Mesh::Get("data/cielo.ASE");
 
 	//Door
-	Mesh* door;
-	
 	doormesh = Mesh::Get("data/animations/door/door1.obj");
 	doortext = Texture::Get("data/animations/door/door.png");
 	doorModel.setTranslation(5,0,-20);
@@ -116,7 +114,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	play = new playStage();
 	end = new endStage();
 
-	current_stage = title;
+	current_stage = play;
 
 	dialogos.push_back(Texture::Get("data/dialogues/1.png"));
 	dialogos.push_back(Texture::Get("data/dialogues/2.png"));

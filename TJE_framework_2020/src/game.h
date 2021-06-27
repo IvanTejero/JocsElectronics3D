@@ -142,7 +142,7 @@ public:
 	int idxAjustes = 0;
 
 	//Audio
-	//HSAMPLE titleSound;
+	HSAMPLE titleSound;
 
 	Game( int window_width, int window_height, SDL_Window* window );
 
