@@ -144,6 +144,9 @@ public:
 	//Audio
 	HSAMPLE titleSound;
 
+	HCHANNEL titleSoundChannel;
+
+
 	Game( int window_width, int window_height, SDL_Window* window );
 
 	//main functions

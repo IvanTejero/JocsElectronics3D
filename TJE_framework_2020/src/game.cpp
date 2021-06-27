@@ -41,6 +41,21 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	}
 
 
+	titleSound = BASS_SampleLoad(false, "data/sounds/menu.mp3", 0, 0, 3, 0);
+	if (titleSound == 0)
+	{
+		//file not found
+		std::cout << "Error audio not found!";
+	}
+
+	//Creamos un canal para el sample
+	titleSoundChannel = BASS_SampleGetChannel(titleSound, false);
+
+
+	//Lanzamos un sample
+	//BASS_ChannelPlay(titleSoundChannel, true);
+
+
 	char* nombre;
 	nombre = "data/bosque.txt";
 	readFile(nombre);
@@ -114,7 +129,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	play = new playStage();
 	end = new endStage();
 
-	current_stage = play;
+	current_stage = tutorial;
 
 	dialogos.push_back(Texture::Get("data/dialogues/1.png"));
 	dialogos.push_back(Texture::Get("data/dialogues/2.png"));

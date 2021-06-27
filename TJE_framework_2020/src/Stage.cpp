@@ -44,7 +44,7 @@ void tutorialStage::render() {
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	RenderMesh(game->shader, game->clockMesh, game->clockModel, game->camera, game->clockText);
+	//RenderMesh(game->shader, game->clockMesh, game->clockModel, game->camera, game->clockText);
 	RenderMesh(game->shader, game->mainCharacter, game->model, game->camera, game->texCharacter);
 	RenderMesh(game->shader, game->box_mesh, game->boxModel, game->camera, game->box_text);
 
@@ -122,7 +122,9 @@ void tutorialStage::update(float seconds_elapsed) {
 		Vector3 returned;
 
 		Vector3 centerCharacter = targetPos + Vector3(0.0, 1.0, 0.0);
-		if (game->doormesh->testSphereCollision(game->doorModel, centerCharacter, 0.5, coll, collnorm)) { game->current_stage = game->title; game->titleTime = game->time; }
+		if (game->doormesh->testSphereCollision(game->doorModel, centerCharacter, 0.5, coll, collnorm)) { game->current_stage = game->title; game->titleTime = game->time;
+		BASS_ChannelPlay(game->titleSoundChannel, true);
+		}
 	}
 }
 
@@ -196,12 +198,8 @@ void titleStage::update(float dt) {
 			
 		}
 
-		
-
 	}
 	
-	
-
 }
 
 

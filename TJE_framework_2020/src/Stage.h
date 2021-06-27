@@ -5,15 +5,7 @@
 #include "camera.h"
 #include "Gamemap.h"
 #include "animation.h"
-
-/*
-struct Entity_ {
-	Matrix44 model;
-	Mesh* mesh;
-	Texture* texture;
-	BoundingBox aabb;
-};
-*/
+#include "extra/bass.h"
 
 class Stage {
 public:
