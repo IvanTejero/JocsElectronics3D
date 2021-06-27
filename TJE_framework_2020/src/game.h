@@ -56,16 +56,23 @@ public:
 	Mesh* mesh = NULL;
 	Texture* texture = NULL;
 	Shader* shader = NULL;
-	Animation* anim = NULL;
+	Shader* skinnedShader;
+	
+
 	float angle = 0;
 	float mouse_speed = 100.0f;
 	FBO* fbo = NULL;
+	float timeCounter = 0.0;
+	bool startCounter = false;
+	bool moving = true;
 
 	sPlayer player;
 
 	std::vector<Entity_*> static_entities;
 	std::vector<Entity_*> dynamic_entities;
 	std::vector<Entity_*> mapTrees;
+
+	std::vector<Texture*> dialogos;
 
 	Mesh* mainCharacter = NULL;
 	Texture* texCharacter = NULL;
@@ -91,6 +98,8 @@ public:
 	const float tileWidth = 6;
 	const float tileHeight = 6;
 
+	int idxDialog = 0;
+	bool secondParte = false;
 	//Cielo
 	Mesh* skybox;
 	Matrix44 skymodel;
@@ -101,10 +110,33 @@ public:
 	Texture* ground_text;
 	Matrix44 groundModel;
 
+	//Puerta
+	Mesh* doormesh;
+	Texture* doortext;
+	Matrix44 doorModel;
+
+
 	//Box
 	Mesh* box_mesh;
 	Texture* box_text;
 	Matrix44 boxModel;
+
+	//Animaciones
+	Animation* actualAnimation;
+	bool AnimationOn = false;
+	Animation* walk = NULL;
+	Animation* boxing = NULL;
+
+	//title 
+	int changeAnim = 0;
+	float titleTime = 0.0;
+	int count = 0;
+	bool animationEnd = false;
+	bool ajustesOn = false;
+	int idxAjustes = 0;
+
+	//Audio
+
 
 	Game( int window_width, int window_height, SDL_Window* window );
 
@@ -125,7 +157,9 @@ public:
 	//Read from file
 	void readFile(char* nombre);
 	void loadmap(GameMap* map);
+	void loadTitle(char* name);
 
+	std::vector<Texture*> titleAnim;
 };
 
 

@@ -35,9 +35,12 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	mouse_locked = false;
 
 	char* nombre;
-	nombre = "data/prueba.txt";
+	nombre = "data/bosque.txt";
 	readFile(nombre);
 	
+	char* titleName;
+	titleName = "data/title.txt";
+	loadTitle(titleName);
 
 	//OpenGL flags
 	glEnable( GL_CULL_FACE ); //render both sides of every triangle
@@ -49,20 +52,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->setPerspective(70.f,window_width/(float)window_height,0.1f,10000.f); //set the projection, we want to be perspective
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
-	escenaText = new Texture();
-	escenaText->load("data/export.png");
-	escenaMesh = Mesh::Get("data/export.obj");
 
 	box_mesh = Mesh::Get("data/box1.obj");
 	box_text = Texture::Get("data/white.png");
 
 
-	mainCharacter = Mesh::Get("data/pirata_chica1.obj");
-	texCharacter = Texture::Get("data/PolygonMinis_Texture_01_A.png");
-
-	Animation* anim = Animation::Get("data/animations/animationchica.skanim");
-	anim->assignTime(time);
-	anim->skeleton.renderSkeleton(camera, model);
+	mainCharacter = Mesh::Get("data/animations/AnimacionesAlice/aliceWalk.mesh");
+	texCharacter = Texture::Get("data/alice2.png");
 
 	catCharacter = Mesh::Get("data/Cheshirev2.obj");
 	cattexCharacter = Texture::Get("data/CheshireCat_DMA.png");
@@ -79,15 +75,23 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
+	skinnedShader = Shader::Get("data/shaders/skinning.vs", "data/shaders/texture.fs");
 
 	ground_mesh = new Mesh();
 	ground_mesh->createPlane(200);
 	ground_text = Texture::Get("data/grass.tga");
 
 	//Sky stuff
-	tex = new Texture();
+	tex = Texture::Get("data/cielo.tga");
 	skybox = Mesh::Get("data/cielo.ASE");
-	tex->load("data/cielo.tga");
+
+	//Door
+	Mesh* door;
+	
+	doormesh = Mesh::Get("data/animations/door/door1.obj");
+	doortext = Texture::Get("data/animations/door/door.png");
+	doorModel.setTranslation(14,0,99.5);
+
 	// example of shader loading using the shaders manager
 	
 	//hide the cursor
@@ -101,11 +105,20 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	play = new playStage();
 	end = new endStage();
 
-	current_stage = play;
+	current_stage = title;
 
-	player.pos = Vector3(18, 0, 177);
+	dialogos.push_back(Texture::Get("data/dialogues/1.png"));
+	dialogos.push_back(Texture::Get("data/dialogues/2.png"));
+	dialogos.push_back(Texture::Get("data/dialogues/3.png"));
 
-	//player.pos = Vector3(0, 0, 0);
+	player.pos = Vector3(0, 0, 0);
+
+
+	//Animation
+	walk = Animation::Get("data/animations/AnimacionesAlice/walk.skanim");
+	boxing = Animation::Get("data/animations/AnimacionesAlice/boxing.skanim");
+
+	actualAnimation = boxing;
 }
 
 //what to do when the image has to be draw
@@ -223,8 +236,6 @@ void Game::readFile(char* name) {
 			end = linea.find(del, start);
 		}
 
-		cout << stats[0];
-
 		Entity_* entidad = new Entity_;
 
 		entidad->model.setTranslation(stoi(stats[0]), stoi(stats[1]), stoi(stats[2]));
@@ -264,3 +275,44 @@ void Game::loadmap(GameMap* map) {
 	}
 }
 
+
+void Game::loadTitle(char* name) {
+
+	string linea;
+
+	string nombre = name;
+
+	ifstream fichero(nombre.c_str());
+	if (fichero.fail())
+	{
+		std::cout << "No existe el fichero!" << std::endl;
+		exit(1);
+	}
+
+	while (getline(fichero, linea))
+	{
+		std::string stats[15];
+
+		int i = 0;
+
+		string del = " ";
+		int start = 0;
+		int end = linea.find(del);
+		while (end != -1) {
+			stats[i] = linea.substr(start, end - start);
+			i++;
+
+			start = end + del.size();
+			end = linea.find(del, start);
+		}
+
+		string path = "data/title/Final/";
+		string str = path + linea;
+
+		titleAnim.push_back(Texture::Get(str.c_str()));
+		
+	}
+
+	fichero.close();
+
+}
